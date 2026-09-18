@@ -43,6 +43,12 @@ export default function RootLayout({
                   {g.name}
                 </Link>
               ))}
+              <Link
+                href="/search"
+                className="ml-auto rounded-full bg-stone-100 px-3 py-1 hover:bg-stone-200"
+              >
+                🔍 搜索
+              </Link>
             </nav>
           </div>
         </header>
