@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/site.config";
-import { getGames, getGuideMetas } from "@/lib/content";
+import { getAllGuideMetas, getGames, getGuideMetas } from "@/lib/content";
 
 export default function HomePage() {
   const games = getGames();
@@ -9,6 +9,11 @@ export default function HomePage() {
     ...order.map((s) => games.find((g) => g.slug === s)).filter(Boolean),
     ...games.filter((g) => !order.includes(g.slug)),
   ] as typeof games;
+
+  const gameName = new Map(games.map((g) => [g.slug, g.name]));
+  const latest = getAllGuideMetas()
+    .sort((a, b) => (b.last_verified ?? "").localeCompare(a.last_verified ?? ""))
+    .slice(0, 6);
 
   return (
     <div className="space-y-10">
@@ -58,6 +63,27 @@ export default function HomePage() {
             );
           })}
         </div>
+      </section>
+      <section>
+        <h2 className="mb-4 text-xl font-bold">最新攻略</h2>
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {latest.map((m) => (
+            <li key={`${m.game}/${m.slug}`}>
+              <Link
+                href={`/games/${m.game}/guides/${m.slug}`}
+                className="block h-full rounded-xl bg-white p-4 shadow-sm ring-1 ring-stone-200 transition hover:shadow-md"
+              >
+                <span className="text-xs" style={{ color: "#78716c" }}>
+                  {gameName.get(m.game)} · {m.type}
+                </span>
+                <p className="mt-1 font-medium leading-snug">{m.title}</p>
+                <p className="mt-2 text-xs text-stone-500">
+                  {m.last_verified ? `更新于 ${m.last_verified}` : ""}
+                </p>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
     </div>
   );
