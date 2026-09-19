@@ -85,6 +85,40 @@ export default function HomePage() {
         </div>
       </section>
       <section>
+        <div className="mb-4 flex items-baseline justify-between">
+          <h2 className="text-xl font-bold">互动工具</h2>
+          <Link href="/tools" className="text-sm text-stone-500 hover:text-stone-900">
+            全部工具 →
+          </Link>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Link
+            href="/tools/dawnwalker-endings"
+            className="rounded-xl bg-stone-900 p-5 text-stone-100 transition hover:bg-stone-800"
+          >
+            <p className="text-xs text-stone-400">黎明行者之血</p>
+            <p className="mt-1 font-bold">🧭 结局路线规划器</p>
+            <p className="mt-2 text-sm text-stone-400">勾选进度，实时看 7 结局各差哪步</p>
+          </Link>
+          <Link
+            href="/tools/dawnwalker-30day-planner"
+            className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-stone-200 transition hover:shadow-md"
+          >
+            <p className="text-xs text-stone-400">黎明行者之血</p>
+            <p className="mt-1 font-bold">📅 30 天规划追踪器</p>
+            <p className="mt-2 text-sm text-stone-500">五阶段关键目标打卡，开新周目重置</p>
+          </Link>
+          <Link
+            href="/tools/endfield-daily-checklist"
+            className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-stone-200 transition hover:shadow-md"
+          >
+            <p className="text-xs text-stone-400">明日方舟：终末地</p>
+            <p className="mt-1 font-bold">✅ 每日清单追踪器</p>
+            <p className="mt-2 text-sm text-stone-500">日常按天重置、周常按周重置，15 分钟不漏项</p>
+          </Link>
+        </div>
+      </section>
+      <section>
         <h2 className="mb-4 text-xl font-bold">最新攻略</h2>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {latest.map((m) => (

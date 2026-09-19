@@ -74,9 +74,20 @@ export default function RootLayout({
         </main>
 
         <footer className="border-t border-stone-200 bg-white">
-          <div className="mx-auto max-w-5xl px-4 py-6 text-sm text-stone-500">
-            {siteConfig.name} · {siteConfig.tagline} · 所有攻略标注适用版本与验证时间
-            <span className="mx-2">·</span>
+          <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-6 text-sm text-stone-500">
+            <span>
+              {siteConfig.name} · {siteConfig.tagline}
+            </span>
+            <span className="text-stone-300">|</span>
+            <Link href="/about" className="hover:text-stone-900">
+              关于本站
+            </Link>
+            <Link href="/privacy" className="hover:text-stone-900">
+              隐私政策
+            </Link>
+            <Link href="/tools" className="hover:text-stone-900">
+              互动工具
+            </Link>
             <a href="/rss.xml" className="hover:text-stone-900">
               RSS 订阅
             </a>
