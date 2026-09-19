@@ -28,7 +28,10 @@ export type GuideType =
   | "Boss打法"
   | "Build配装"
   | "收集指南"
-  | "版本解读";
+  | "版本解读"
+  | "机制解析"
+  | "进阶指南"
+  | "速查表";
 
 export interface GuideMeta {
   slug: string;
@@ -130,7 +133,7 @@ export async function getGuide(
   return { ...meta, contentHtml: processed.toString() };
 }
 
-/** 攻略按类型分组，保持固定展示顺序 */
+/** 攻略按类型分组，保持固定展示顺序；未知类型追加在末尾，防止新增类型被静默丢弃 */
 export function groupGuides(metas: GuideMeta[]): [GuideType, GuideMeta[]][] {
   const order: GuideType[] = [
     "新手指南",
@@ -139,6 +142,9 @@ export function groupGuides(metas: GuideMeta[]): [GuideType, GuideMeta[]][] {
     "Build配装",
     "收集指南",
     "版本解读",
+    "机制解析",
+    "进阶指南",
+    "速查表",
   ];
   const map = new Map<GuideType, GuideMeta[]>();
   for (const m of metas) {
@@ -146,7 +152,34 @@ export function groupGuides(metas: GuideMeta[]): [GuideType, GuideMeta[]][] {
     arr.push(m);
     map.set(m.type, arr);
   }
-  return order
+  const ordered = order
     .filter((t) => map.has(t))
     .map((t) => [t, map.get(t)!] as [GuideType, GuideMeta[]]);
+  const extras = [...map.keys()]
+    .filter((t) => !order.includes(t))
+    .map((t) => [t, map.get(t)!] as [GuideType, GuideMeta[]]);
+  return [...ordered, ...extras];
+}
+
+/** 同游戏内相关攻略：同类型 + 标签重合度打分，用于详情页内链 */
+export function getRelatedGuides(
+  gameSlug: string,
+  currentSlug: string,
+  limit = 4
+): GuideMeta[] {
+  const current = getGuideMetas(gameSlug).find((m) => m.slug === currentSlug);
+  if (!current) return [];
+  const curTags = new Set(current.tags ?? []);
+  return getGuideMetas(gameSlug)
+    .filter((m) => m.slug !== currentSlug)
+    .map((m) => {
+      let score = 0;
+      if (m.type === current.type) score += 2;
+      for (const t of m.tags ?? []) if (curTags.has(t)) score += 1;
+      return { m, score };
+    })
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((x) => x.m);
 }

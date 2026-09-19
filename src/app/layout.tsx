@@ -60,6 +60,10 @@ export default function RootLayout({
         <footer className="border-t border-stone-200 bg-white">
           <div className="mx-auto max-w-5xl px-4 py-6 text-sm text-stone-500">
             {siteConfig.name} · {siteConfig.tagline} · 所有攻略标注适用版本与验证时间
+            <span className="mx-2">·</span>
+            <a href="/rss.xml" className="hover:text-stone-900">
+              RSS 订阅
+            </a>
           </div>
         </footer>
       </body>

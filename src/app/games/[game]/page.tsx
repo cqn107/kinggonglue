@@ -28,6 +28,9 @@ const TYPE_LABEL: Record<string, string> = {
   "Build配装": "🛠️ Build 配装",
   收集指南: "📦 收集指南",
   版本解读: "📰 版本解读",
+  机制解析: "⚙️ 机制解析",
+  进阶指南: "🚀 进阶指南",
+  速查表: "📋 速查表",
 };
 
 export default async function GamePage({ params }: Props) {

@@ -6,6 +6,7 @@ import {
   getGame,
   getGames,
   getGuide,
+  getRelatedGuides,
 } from "@/lib/content";
 import { siteConfig } from "@/site.config";
 
@@ -47,6 +48,8 @@ export default async function GuidePage({ params }: Props) {
   const game = getGame(gameSlug);
   const guide = await getGuide(gameSlug, guideSlug);
   if (!game || !guide) notFound();
+
+  const related = getRelatedGuides(gameSlug, guideSlug);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -123,6 +126,25 @@ export default async function GuidePage({ params }: Props) {
         className="prose prose-stone max-w-none prose-headings:font-bold prose-a:text-blue-700"
         dangerouslySetInnerHTML={{ __html: guide.contentHtml }}
       />
+
+      {related.length > 0 ? (
+        <aside className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-stone-200">
+          <h2 className="text-lg font-bold">相关攻略</h2>
+          <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+            {related.map((r) => (
+              <li key={r.slug}>
+                <Link
+                  href={`/games/${game.slug}/guides/${r.slug}`}
+                  className="block rounded-xl p-3 ring-1 ring-stone-200 transition hover:bg-stone-50"
+                >
+                  <span className="text-xs text-stone-500">{r.type}</span>
+                  <p className="font-medium leading-snug">{r.title}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      ) : null}
     </article>
   );
 }
