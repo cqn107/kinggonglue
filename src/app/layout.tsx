@@ -43,6 +43,9 @@ export default function RootLayout({
                   {g.name}
                 </Link>
               ))}
+              <Link href="/tools" className="hover:text-stone-900">
+                🧰 工具
+              </Link>
               <Link
                 href="/search"
                 className="ml-auto rounded-full bg-stone-100 px-3 py-1 hover:bg-stone-200"
