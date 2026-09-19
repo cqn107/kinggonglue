@@ -51,7 +51,7 @@ export default async function GuidePage({ params }: Props) {
 
   const related = getRelatedGuides(gameSlug, guideSlug);
 
-  const jsonLd = {
+  const articleLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: guide.title,
@@ -64,11 +64,33 @@ export default async function GuidePage({ params }: Props) {
     keywords: guide.tags?.join(", "),
   };
 
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "首页", item: siteConfig.url },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: game.name,
+        item: `${siteConfig.url}/games/${game.slug}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: guide.title,
+        item: `${siteConfig.url}/games/${game.slug}/guides/${guide.slug}`,
+      },
+    ],
+  };
+
   return (
     <article className="space-y-6">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([articleLd, breadcrumbLd]),
+        }}
       />
 
       <nav className="text-sm text-stone-500">
