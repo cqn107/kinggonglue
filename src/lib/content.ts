@@ -47,8 +47,14 @@ export interface GuideMeta {
   tags?: string[];
 }
 
+export interface TocItem {
+  id: string;
+  text: string;
+}
+
 export interface Guide extends GuideMeta {
   contentHtml: string;
+  toc: TocItem[];
 }
 
 /* ---------- 游戏注册表 ---------- */
@@ -130,7 +136,17 @@ export async function getGuide(
   if (!meta) return null;
   const parsed = matter(fs.readFileSync(full, "utf8"));
   const processed = await remark().use(html).process(parsed.content);
-  return { ...meta, contentHtml: processed.toString() };
+  let contentHtml = processed.toString();
+  const toc: TocItem[] = [];
+  contentHtml = contentHtml.replace(
+    /<h2>([\s\S]*?)<\/h2>/g,
+    (_m, inner: string) => {
+      const id = `sec-${toc.length + 1}`;
+      toc.push({ id, text: inner.replace(/<[^>]+>/g, "").trim() });
+      return `<h2 id="${id}">${inner}</h2>`;
+    }
+  );
+  return { ...meta, contentHtml, toc };
 }
 
 /** 攻略按类型分组，保持固定展示顺序；未知类型追加在末尾，防止新增类型被静默丢弃 */

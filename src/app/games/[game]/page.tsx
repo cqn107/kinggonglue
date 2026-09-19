@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getGame, getGames, getGuideMetas, groupGuides } from "@/lib/content";
+import { siteConfig } from "@/site.config";
 
 interface Props {
   params: Promise<{ game: string }>;
@@ -42,8 +43,26 @@ export default async function GamePage({ params }: Props) {
   const metas = getGuideMetas(game.slug);
   const groups = groupGuides(metas);
 
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "首页", item: siteConfig.url },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: game.name,
+        item: `${siteConfig.url}/games/${game.slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="space-y-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
       <section className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-stone-200">
         <div
           className="mb-3 h-2 w-16 rounded-full"

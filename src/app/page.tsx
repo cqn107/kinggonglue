@@ -4,6 +4,22 @@ import { getAllGuideMetas, getGames, getGuideMetas } from "@/lib/content";
 
 export default function HomePage() {
   const games = getGames();
+  const websiteLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    inLanguage: "zh-CN",
+    description: siteConfig.description,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${siteConfig.url}/search?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
   const order = siteConfig.featuredGames;
   const sorted = [
     ...order.map((s) => games.find((g) => g.slug === s)).filter(Boolean),
@@ -17,6 +33,10 @@ export default function HomePage() {
 
   return (
     <div className="space-y-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
+      />
       <section className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-stone-200">
         <h1 className="text-3xl font-bold tracking-tight">{siteConfig.name}</h1>
         <p className="mt-2 max-w-2xl text-stone-600">{siteConfig.description}</p>

@@ -7,7 +7,12 @@ export const metadata: Metadata = {
   description: "按标题、类型、标签搜索全站游戏攻略。",
 };
 
-export default function SearchPage() {
+interface Props {
+  searchParams: Promise<{ q?: string }>;
+}
+
+export default async function SearchPage({ searchParams }: Props) {
+  const { q } = await searchParams;
   const items: SearchItem[] = getAllGuideMetas().map((m) => ({
     game: m.game,
     gameName: getGame(m.game)?.name ?? m.game,
@@ -22,7 +27,7 @@ export default function SearchPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">搜索攻略</h1>
-      <SearchClient items={items} />
+      <SearchClient items={items} initialQ={q ?? ""} />
     </div>
   );
 }

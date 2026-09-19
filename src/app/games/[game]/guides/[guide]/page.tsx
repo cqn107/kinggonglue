@@ -145,6 +145,21 @@ export default async function GuidePage({ params }: Props) {
         </div>
       </header>
 
+      {guide.toc.length > 1 ? (
+        <nav className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-stone-200">
+          <h2 className="text-sm font-bold text-stone-500">本篇目录</h2>
+          <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm">
+            {guide.toc.map((t) => (
+              <li key={t.id}>
+                <a href={`#${t.id}`} className="text-blue-700 hover:underline">
+                  {t.text}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      ) : null}
+
       <div
         className="prose prose-stone max-w-none prose-headings:font-bold prose-a:text-blue-700"
         dangerouslySetInnerHTML={{ __html: guide.contentHtml }}

@@ -14,8 +14,14 @@ export interface SearchItem {
   tags?: string[];
 }
 
-export default function SearchClient({ items }: { items: SearchItem[] }) {
-  const [q, setQ] = useState("");
+export default function SearchClient({
+  items,
+  initialQ = "",
+}: {
+  items: SearchItem[];
+  initialQ?: string;
+}) {
+  const [q, setQ] = useState(initialQ);
 
   const results = useMemo(() => {
     const query = q.trim().toLowerCase();
