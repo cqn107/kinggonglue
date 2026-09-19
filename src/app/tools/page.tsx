@@ -15,6 +15,20 @@ const TOOLS = [
     description:
       "勾选游戏进度，实时查看全 7 结局各差哪几步，附一周目刷全结局路线。",
   },
+  {
+    href: "/tools/dawnwalker-30day-planner",
+    game: "黎明行者之血",
+    name: "30 天开荒规划追踪器",
+    description:
+      "按五个阶段勾选关键目标防踩倒计时陷阱，进度本地保存，开新周目一键重置。",
+  },
+  {
+    href: "/tools/endfield-daily-checklist",
+    game: "明日方舟：终末地",
+    name: "每日清单追踪器",
+    description:
+      "每日 5 项按天自动重置、周常按周重置、睡前挂机检查——15 分钟不漏项。",
+  },
 ];
 
 export default function ToolsPage() {

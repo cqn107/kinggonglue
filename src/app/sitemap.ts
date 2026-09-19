@@ -10,6 +10,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: base, changeFrequency: "daily", priority: 1 },
     { url: `${base}/tools`, changeFrequency: "weekly", priority: 0.7 },
     { url: `${base}/tools/dawnwalker-endings`, changeFrequency: "weekly", priority: 0.7 },
+    { url: `${base}/tools/dawnwalker-30day-planner`, changeFrequency: "weekly", priority: 0.7 },
+    { url: `${base}/tools/endfield-daily-checklist`, changeFrequency: "weekly", priority: 0.7 },
     ...games.map((g) => ({
       url: `${base}/games/${g.slug}`,
       changeFrequency: "daily" as const,
