@@ -20,6 +20,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${game.name}攻略`,
     description: game.description,
     alternates: { canonical: `/games/${slug}` },
+    openGraph: {
+      title: `${game.name}攻略`,
+      description: game.description,
+      images: [{ url: `/og-${slug}.png`, width: 1200, height: 630 }],
+    },
+    twitter: { card: "summary_large_image", images: [`/og-${slug}.png`] },
   };
 }
 
