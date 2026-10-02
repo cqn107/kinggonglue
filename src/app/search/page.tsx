@@ -5,6 +5,10 @@ import SearchClient, { type SearchItem } from "./SearchClient";
 export const metadata: Metadata = {
   title: "搜索攻略",
   description: "按标题、类型、标签搜索全站游戏攻略。",
+  robots: {
+    index: false,
+    follow: true,
+  },
 };
 
 interface Props {
