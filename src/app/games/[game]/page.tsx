@@ -93,6 +93,14 @@ export default async function GamePage({ params }: Props) {
             {game.status}
           </p>
         ) : null}
+        <p className="mt-4 text-sm">
+          <Link
+            href="/compare"
+            className="text-blue-700 hover:underline"
+          >
+            ⚖️ 和另外两款新游横向对比 →
+          </Link>
+        </p>
       </section>
 
       {groups.length === 0 ? (

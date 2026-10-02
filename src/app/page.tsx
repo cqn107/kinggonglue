@@ -85,6 +85,23 @@ export default function HomePage() {
         </div>
       </section>
       <section>
+        <Link
+          href="/compare"
+          className="group flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-stone-900 to-stone-700 p-6 text-stone-100 transition hover:from-stone-800 hover:to-stone-600"
+        >
+          <div>
+            <h2 className="text-lg font-bold">⚖️ 三款新游横向对比</h2>
+            <p className="mt-1 max-w-2xl text-sm text-stone-300">
+              上手门槛、单次时长、肝度、剧情权重——先看哪个适合你，再决定玩哪款。
+            </p>
+          </div>
+          <span className="text-sm font-semibold text-stone-300 group-hover:text-white">
+            看对比表 →
+          </span>
+        </Link>
+      </section>
+
+      <section>
         <div className="mb-4 flex items-baseline justify-between">
           <h2 className="text-xl font-bold">互动工具</h2>
           <Link href="/tools" className="text-sm text-stone-500 hover:text-stone-900">

@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: base, changeFrequency: "daily", priority: 1 },
+    { url: `${base}/compare`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${base}/tools`, changeFrequency: "weekly", priority: 0.7 },
     { url: `${base}/tools/dawnwalker-endings`, changeFrequency: "weekly", priority: 0.7 },
     { url: `${base}/tools/dawnwalker-30day-planner`, changeFrequency: "weekly", priority: 0.7 },

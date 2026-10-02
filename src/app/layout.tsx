@@ -62,6 +62,9 @@ export default function RootLayout({
                   {g.name}
                 </Link>
               ))}
+              <Link href="/compare" className="hover:text-stone-900">
+                游戏对比
+              </Link>
               <Link href="/tools" className="hover:text-stone-900">
                 🧰 工具
               </Link>

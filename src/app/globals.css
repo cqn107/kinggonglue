@@ -13,3 +13,25 @@ body {
 a {
   @apply transition-colors;
 }
+
+/* ---------- 「待实测」标注 ---------- */
+/* 正文中未经实测的条目：不伪装成结论，以醒目标注如实告知读者 */
+.kg-unverified {
+  @apply mx-0.5 inline-flex flex-wrap items-baseline gap-1 rounded-md border border-amber-300 bg-amber-50 px-2 py-1 text-[0.95em] leading-snug;
+  border-left-width: 3px;
+}
+
+.kg-unverified-label {
+  @apply shrink-0 rounded bg-amber-200/80 px-1.5 py-0.5 text-[0.75em] font-semibold tracking-wide text-amber-900;
+  vertical-align: 0.1em;
+}
+
+.kg-unverified-item {
+  @apply text-amber-950;
+}
+
+/* 标注出现在标题内时不要撑破排版 */
+h2 .kg-unverified,
+h3 .kg-unverified {
+  @apply text-[0.72em];
+}

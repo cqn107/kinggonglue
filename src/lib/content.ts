@@ -6,6 +6,24 @@ import html from "remark-html";
 
 const CONTENT_ROOT = path.join(process.cwd(), "src", "content", "games");
 
+/* ---------- 待实测标注 ---------- */
+
+/**
+ * 把正文里的 {{待验证：xxx}} 占位符渲染成公开可读的「待实测」标注。
+ * 设计意图：未实测的数值不伪装成结论，但也不该以原始占位符示人——
+ * 用统一的视觉标注把"这里还需要实测确认"诚实地传达给读者。
+ */
+function renderUnverified(htmlContent: string): string {
+  return htmlContent.replace(
+    /\{\{待验证[：:]\s*([\s\S]*?)\}\}/g,
+    (_m, item: string) =>
+      `<span class="kg-unverified" title="本条目尚未经实测验证">` +
+      `<span class="kg-unverified-label">待实测确认</span>` +
+      `<span class="kg-unverified-item">${item.trim()}</span>` +
+      `</span>`
+  );
+}
+
 /* ---------- 类型 ---------- */
 
 export interface Game {
@@ -137,6 +155,7 @@ export async function getGuide(
   const parsed = matter(fs.readFileSync(full, "utf8"));
   const processed = await remark().use(html).process(parsed.content);
   let contentHtml = processed.toString();
+  contentHtml = renderUnverified(contentHtml);
   const toc: TocItem[] = [];
   contentHtml = contentHtml.replace(
     /<h2>([\s\S]*?)<\/h2>/g,
